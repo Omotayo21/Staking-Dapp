@@ -62,40 +62,58 @@ const Navbar = () => {
 
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="fixed inset-0 top-20 bg-slate-950 z-40 md:hidden animate-in fade-in slide-in-from-top-4 duration-300">
-                    <div className="flex flex-col p-6 gap-2">
-                        <Link 
-                            to="/" 
-                            onClick={() => setIsMenuOpen(false)}
-                            className="bg-white/5 text-white p-4 rounded-2xl font-bold border border-white/5 hover:border-indigo-500/50"
-                        >
-                            Explore Marketplace
-                        </Link>
-                        {isConnected && (
-                            <>
-                                <Link 
-                                    to="/create" 
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="bg-white/5 text-white p-4 rounded-2xl font-bold border border-white/5 hover:border-indigo-500/50"
-                                >
-                                    Mint New NFT
-                                </Link>
-                                <Link 
-                                    to="/my-listed-items" 
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="bg-white/5 text-white p-4 rounded-2xl font-bold border border-white/5 hover:border-indigo-500/50"
-                                >
-                                    My Listed Items
-                                </Link>
-                                <Link 
-                                    to="/my-purchases" 
-                                    onClick={() => setIsMenuOpen(false)}
-                                    className="bg-white/5 text-white p-4 rounded-2xl font-bold border border-white/5 hover:border-indigo-500/50"
-                                >
-                                    Purchase History
-                                </Link>
-                            </>
-                        )}
+                <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-[60] md:hidden animate-in fade-in zoom-in duration-300">
+                    <div className="flex flex-col h-full">
+                        <div className="flex justify-between items-center h-20 px-4">
+                            <Link to="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
+                                <div className="w-10 h-10 bg-blue-500 rounded-xl flex items-center justify-center">
+                                    <span className="text-white font-black text-xl">M</span>
+                                </div>
+                            </Link>
+                            <button onClick={() => setIsMenuOpen(false)} className="p-2 text-white">
+                                <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        <div className="flex flex-col p-6 gap-4">
+                            <Link 
+                                to="/" 
+                                onClick={() => setIsMenuOpen(false)}
+                                className="text-3xl font-black text-white hover:text-blue-400 transition-colors"
+                            >
+                                Explore
+                            </Link>
+                            {isConnected && (
+                                <>
+                                    <Link 
+                                        to="/create" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-3xl font-black text-white hover:text-blue-400 transition-colors"
+                                    >
+                                        Mint NFT
+                                    </Link>
+                                    <Link 
+                                        to="/my-listed-items" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-3xl font-black text-white hover:text-blue-400 transition-colors"
+                                    >
+                                        My Items
+                                    </Link>
+                                    <Link 
+                                        to="/my-purchases" 
+                                        onClick={() => setIsMenuOpen(false)}
+                                        className="text-3xl font-black text-white hover:text-blue-400 transition-colors"
+                                    >
+                                        Portfolio
+                                    </Link>
+                                </>
+                            )}
+                            <div className="mt-8 pt-8 border-t border-white/10">
+                                <ConnectButton />
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}
