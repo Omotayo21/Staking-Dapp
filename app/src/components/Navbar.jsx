@@ -62,7 +62,7 @@ const Navbar = () => {
 
             {/* Mobile Menu Overlay */}
             {isMenuOpen && (
-                <div className="fixed inset-0 bg-slate-950/95 backdrop-blur-2xl z-[60] md:hidden animate-in fade-in zoom-in duration-300">
+                <div className="fixed inset-0 bg-blue-500 z-[60] md:hidden animate-in fade-in zoom-in duration-300">
                     <div className="flex flex-col h-full">
                         <div className="flex justify-between items-center h-20 px-4">
                             <Link to="/" className="flex items-center gap-3" onClick={() => setIsMenuOpen(false)}>
@@ -77,7 +77,7 @@ const Navbar = () => {
                             </button>
                         </div>
 
-                        <div className="flex flex-col p-6 gap-4">
+                        <div className="flex flex-col p-6 gap-4 bg-blue-500">
                             <Link 
                                 to="/" 
                                 onClick={() => setIsMenuOpen(false)}
