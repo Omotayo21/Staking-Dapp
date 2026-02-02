@@ -1,6 +1,6 @@
 {
-  "nft": {
-    "address": "0x48D5D22E6656B5971933F9Ac0E2ca638E541e6B3",
+  "token": {
+    "address": "0x9D3011455a54dEeF83F509E4fe11c2e9CEaE6282",
     "abi": [
       {
         "type": "constructor",
@@ -10,7 +10,25 @@
       },
       {
         "type": "error",
-        "name": "ERC721IncorrectOwner",
+        "name": "ERC20InsufficientAllowance",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "spender"
+          },
+          {
+            "type": "uint256",
+            "name": "allowance"
+          },
+          {
+            "type": "uint256",
+            "name": "needed"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "ERC20InsufficientBalance",
         "inputs": [
           {
             "type": "address",
@@ -18,31 +36,17 @@
           },
           {
             "type": "uint256",
-            "name": "tokenId"
-          },
-          {
-            "type": "address",
-            "name": "owner"
-          }
-        ]
-      },
-      {
-        "type": "error",
-        "name": "ERC721InsufficientApproval",
-        "inputs": [
-          {
-            "type": "address",
-            "name": "operator"
+            "name": "balance"
           },
           {
             "type": "uint256",
-            "name": "tokenId"
+            "name": "needed"
           }
         ]
       },
       {
         "type": "error",
-        "name": "ERC721InvalidApprover",
+        "name": "ERC20InvalidApprover",
         "inputs": [
           {
             "type": "address",
@@ -52,27 +56,7 @@
       },
       {
         "type": "error",
-        "name": "ERC721InvalidOperator",
-        "inputs": [
-          {
-            "type": "address",
-            "name": "operator"
-          }
-        ]
-      },
-      {
-        "type": "error",
-        "name": "ERC721InvalidOwner",
-        "inputs": [
-          {
-            "type": "address",
-            "name": "owner"
-          }
-        ]
-      },
-      {
-        "type": "error",
-        "name": "ERC721InvalidReceiver",
+        "name": "ERC20InvalidReceiver",
         "inputs": [
           {
             "type": "address",
@@ -82,7 +66,7 @@
       },
       {
         "type": "error",
-        "name": "ERC721InvalidSender",
+        "name": "ERC20InvalidSender",
         "inputs": [
           {
             "type": "address",
@@ -92,11 +76,31 @@
       },
       {
         "type": "error",
-        "name": "ERC721NonexistentToken",
+        "name": "ERC20InvalidSpender",
         "inputs": [
           {
-            "type": "uint256",
-            "name": "tokenId"
+            "type": "address",
+            "name": "spender"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "OwnableInvalidOwner",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "owner"
+          }
+        ]
+      },
+      {
+        "type": "error",
+        "name": "OwnableUnauthorizedAccount",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "account"
           }
         ]
       },
@@ -112,64 +116,30 @@
           },
           {
             "type": "address",
-            "name": "approved",
+            "name": "spender",
             "indexed": true
           },
           {
             "type": "uint256",
-            "name": "tokenId",
-            "indexed": true
+            "name": "value",
+            "indexed": false
           }
         ]
       },
       {
         "type": "event",
         "anonymous": false,
-        "name": "ApprovalForAll",
+        "name": "OwnershipTransferred",
         "inputs": [
           {
             "type": "address",
-            "name": "owner",
+            "name": "previousOwner",
             "indexed": true
           },
           {
             "type": "address",
-            "name": "operator",
+            "name": "newOwner",
             "indexed": true
-          },
-          {
-            "type": "bool",
-            "name": "approved",
-            "indexed": false
-          }
-        ]
-      },
-      {
-        "type": "event",
-        "anonymous": false,
-        "name": "BatchMetadataUpdate",
-        "inputs": [
-          {
-            "type": "uint256",
-            "name": "_fromTokenId",
-            "indexed": false
-          },
-          {
-            "type": "uint256",
-            "name": "_toTokenId",
-            "indexed": false
-          }
-        ]
-      },
-      {
-        "type": "event",
-        "anonymous": false,
-        "name": "MetadataUpdate",
-        "inputs": [
-          {
-            "type": "uint256",
-            "name": "_tokenId",
-            "indexed": false
           }
         ]
       },
@@ -190,8 +160,45 @@
           },
           {
             "type": "uint256",
-            "name": "tokenId",
-            "indexed": true
+            "name": "value",
+            "indexed": false
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "FAUCET_AMOUNT",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "allowance",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": "owner"
+          },
+          {
+            "type": "address",
+            "name": "spender"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
           }
         ]
       },
@@ -203,67 +210,11 @@
         "inputs": [
           {
             "type": "address",
-            "name": "to"
+            "name": "spender"
           },
           {
             "type": "uint256",
-            "name": "tokenId"
-          }
-        ],
-        "outputs": []
-      },
-      {
-        "type": "function",
-        "name": "balanceOf",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-          {
-            "type": "address",
-            "name": "owner"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "uint256",
-            "name": ""
-          }
-        ]
-      },
-      {
-        "type": "function",
-        "name": "getApproved",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-          {
-            "type": "uint256",
-            "name": "tokenId"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "address",
-            "name": ""
-          }
-        ]
-      },
-      {
-        "type": "function",
-        "name": "isApprovedForAll",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-          {
-            "type": "address",
-            "name": "owner"
-          },
-          {
-            "type": "address",
-            "name": "operator"
+            "name": "value"
           }
         ],
         "outputs": [
@@ -275,13 +226,14 @@
       },
       {
         "type": "function",
-        "name": "mint",
-        "constant": false,
+        "name": "balanceOf",
+        "constant": true,
+        "stateMutability": "view",
         "payable": false,
         "inputs": [
           {
-            "type": "string",
-            "name": "tokenURI"
+            "type": "address",
+            "name": "account"
           }
         ],
         "outputs": [
@@ -290,6 +242,64 @@
             "name": ""
           }
         ]
+      },
+      {
+        "type": "function",
+        "name": "decimals",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint8",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "faucet",
+        "constant": false,
+        "payable": false,
+        "inputs": [],
+        "outputs": []
+      },
+      {
+        "type": "function",
+        "name": "lastFaucetTime",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "mint",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": "to"
+          },
+          {
+            "type": "uint256",
+            "name": "amount"
+          }
+        ],
+        "outputs": []
       },
       {
         "type": "function",
@@ -307,16 +317,11 @@
       },
       {
         "type": "function",
-        "name": "ownerOf",
+        "name": "owner",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
-        "inputs": [
-          {
-            "type": "uint256",
-            "name": "tokenId"
-          }
-        ],
+        "inputs": [],
         "outputs": [
           {
             "type": "address",
@@ -326,85 +331,11 @@
       },
       {
         "type": "function",
-        "name": "safeTransferFrom",
+        "name": "renounceOwnership",
         "constant": false,
         "payable": false,
-        "inputs": [
-          {
-            "type": "address",
-            "name": "from"
-          },
-          {
-            "type": "address",
-            "name": "to"
-          },
-          {
-            "type": "uint256",
-            "name": "tokenId"
-          }
-        ],
+        "inputs": [],
         "outputs": []
-      },
-      {
-        "type": "function",
-        "name": "safeTransferFrom",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-          {
-            "type": "address",
-            "name": "from"
-          },
-          {
-            "type": "address",
-            "name": "to"
-          },
-          {
-            "type": "uint256",
-            "name": "tokenId"
-          },
-          {
-            "type": "bytes",
-            "name": "data"
-          }
-        ],
-        "outputs": []
-      },
-      {
-        "type": "function",
-        "name": "setApprovalForAll",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-          {
-            "type": "address",
-            "name": "operator"
-          },
-          {
-            "type": "bool",
-            "name": "approved"
-          }
-        ],
-        "outputs": []
-      },
-      {
-        "type": "function",
-        "name": "supportsInterface",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [
-          {
-            "type": "bytes4",
-            "name": "interfaceId"
-          }
-        ],
-        "outputs": [
-          {
-            "type": "bool",
-            "name": ""
-          }
-        ]
       },
       {
         "type": "function",
@@ -422,7 +353,7 @@
       },
       {
         "type": "function",
-        "name": "tokenCount",
+        "name": "totalSupply",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -436,19 +367,22 @@
       },
       {
         "type": "function",
-        "name": "tokenURI",
-        "constant": true,
-        "stateMutability": "view",
+        "name": "transfer",
+        "constant": false,
         "payable": false,
         "inputs": [
           {
+            "type": "address",
+            "name": "to"
+          },
+          {
             "type": "uint256",
-            "name": "tokenId"
+            "name": "value"
           }
         ],
         "outputs": [
           {
-            "type": "string",
+            "type": "bool",
             "name": ""
           }
         ]
@@ -469,15 +403,33 @@
           },
           {
             "type": "uint256",
-            "name": "tokenId"
+            "name": "value"
+          }
+        ],
+        "outputs": [
+          {
+            "type": "bool",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "transferOwnership",
+        "constant": false,
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": "newOwner"
           }
         ],
         "outputs": []
       }
     ]
   },
-  "marketplace": {
-    "address": "0xe1234c4d7D08d884a92202eEc5513A32De6b3E6b",
+  "staking": {
+    "address": "0xC6c9bA28060d92f206C6a602B25165c937517785",
     "abi": [
       {
         "type": "constructor",
@@ -485,8 +437,8 @@
         "payable": false,
         "inputs": [
           {
-            "type": "uint256",
-            "name": "_feePercent"
+            "type": "address",
+            "name": "_stakingToken"
           }
         ]
       },
@@ -498,89 +450,57 @@
       {
         "type": "event",
         "anonymous": false,
-        "name": "Bought",
+        "name": "RewardClaimed",
         "inputs": [
           {
-            "type": "uint256",
-            "name": "itemId",
-            "indexed": false
-          },
-          {
             "type": "address",
-            "name": "nft",
+            "name": "user",
             "indexed": true
           },
           {
             "type": "uint256",
-            "name": "tokenId",
+            "name": "reward",
             "indexed": false
-          },
-          {
-            "type": "uint256",
-            "name": "price",
-            "indexed": false
-          },
-          {
-            "type": "address",
-            "name": "seller",
-            "indexed": true
-          },
-          {
-            "type": "address",
-            "name": "buyer",
-            "indexed": true
           }
         ]
       },
       {
         "type": "event",
         "anonymous": false,
-        "name": "Offered",
+        "name": "Staked",
         "inputs": [
           {
-            "type": "uint256",
-            "name": "itemId",
-            "indexed": false
-          },
-          {
             "type": "address",
-            "name": "nft",
+            "name": "user",
             "indexed": true
           },
           {
             "type": "uint256",
-            "name": "tokenId",
+            "name": "amount",
             "indexed": false
+          }
+        ]
+      },
+      {
+        "type": "event",
+        "anonymous": false,
+        "name": "Unstaked",
+        "inputs": [
+          {
+            "type": "address",
+            "name": "user",
+            "indexed": true
           },
           {
             "type": "uint256",
-            "name": "price",
+            "name": "amount",
             "indexed": false
-          },
-          {
-            "type": "address",
-            "name": "seller",
-            "indexed": true
           }
         ]
       },
       {
         "type": "function",
-        "name": "feeAccount",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-          {
-            "type": "address",
-            "name": ""
-          }
-        ]
-      },
-      {
-        "type": "function",
-        "name": "feePercent",
+        "name": "REWARD_RATE_PERCENT",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
@@ -594,14 +514,36 @@
       },
       {
         "type": "function",
-        "name": "getTotalPrice",
+        "name": "SECONDS_IN_YEAR",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "claimReward",
+        "constant": false,
+        "payable": false,
+        "inputs": [],
+        "outputs": []
+      },
+      {
+        "type": "function",
+        "name": "earned",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
         "inputs": [
           {
-            "type": "uint256",
-            "name": "_itemId"
+            "type": "address",
+            "name": "account"
           }
         ],
         "outputs": [
@@ -613,88 +555,119 @@
       },
       {
         "type": "function",
-        "name": "itemCount",
-        "constant": true,
-        "stateMutability": "view",
+        "name": "exit",
+        "constant": false,
         "payable": false,
         "inputs": [],
-        "outputs": [
-          {
-            "type": "uint256",
-            "name": ""
-          }
-        ]
+        "outputs": []
       },
       {
         "type": "function",
-        "name": "items",
+        "name": "lastUpdateTime",
         "constant": true,
         "stateMutability": "view",
         "payable": false,
         "inputs": [
           {
-            "type": "uint256",
+            "type": "address",
             "name": ""
           }
         ],
         "outputs": [
           {
             "type": "uint256",
-            "name": "itemId"
-          },
-          {
-            "type": "address",
-            "name": "nft"
-          },
-          {
-            "type": "uint256",
-            "name": "tokenId"
-          },
-          {
-            "type": "uint256",
-            "name": "price"
-          },
-          {
-            "type": "address",
-            "name": "seller"
-          },
-          {
-            "type": "bool",
-            "name": "sold"
+            "name": ""
           }
         ]
       },
       {
         "type": "function",
-        "name": "makeItem",
+        "name": "rewards",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "stake",
         "constant": false,
         "payable": false,
         "inputs": [
           {
-            "type": "address",
-            "name": "_nft"
-          },
-          {
             "type": "uint256",
-            "name": "_tokenId"
-          },
-          {
-            "type": "uint256",
-            "name": "_price"
+            "name": "amount"
           }
         ],
         "outputs": []
       },
       {
         "type": "function",
-        "name": "purchaseItem",
+        "name": "stakedBalance",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "stakingToken",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "address",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "totalStaked",
+        "constant": true,
+        "stateMutability": "view",
+        "payable": false,
+        "inputs": [],
+        "outputs": [
+          {
+            "type": "uint256",
+            "name": ""
+          }
+        ]
+      },
+      {
+        "type": "function",
+        "name": "withdraw",
         "constant": false,
-        "stateMutability": "payable",
-        "payable": true,
+        "payable": false,
         "inputs": [
           {
             "type": "uint256",
-            "name": "_itemId"
+            "name": "amount"
           }
         ],
         "outputs": []

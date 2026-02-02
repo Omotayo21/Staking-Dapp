@@ -1,26 +1,18 @@
 
-import {
-  BrowserRouter,
-  Routes,
-  Route
-} from "react-router-dom";
-import Marketplace from './components/Marketplace';
-import CreateNFT from './components/CreateNFT';
-import MyListedItems from './components/MyListedItems';
-import MyPurchases from './components/MyPurchases';
-import Navbar from './components/Navbar';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Navbar from './components/Navbar';
+import Dashboard from './components/Dashboard';
+import Faucet from './components/Faucet';
 
 function App() {
   return (
     <BrowserRouter>
-      <div className="min-h-screen bg-slate-950">
+      <div className="min-h-screen bg-slate-950 text-slate-200 selection:bg-indigo-500/30">
         <Navbar />
         <Routes>
-          <Route path="/" element={<Marketplace />} />
-          <Route path="/create" element={<CreateNFT />} />
-          <Route path="/my-listed-items" element={<MyListedItems />} />
-          <Route path="/my-purchases" element={<MyPurchases />} />
+          <Route path="/" element={<Dashboard />}/>
+          <Route path="/faucet" element={<Faucet />}/>
         </Routes>
       </div>
     </BrowserRouter>
